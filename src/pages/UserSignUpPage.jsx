@@ -24,16 +24,21 @@ state={
    
   onClickSignUp=async event=>{
 
-    const {username,displayName,password}=this.state
+    const {username,password}=this.state
     event.preventDefault()
     const body={
       username,
-      displayName,
+      displayName:this.state.displayName,
       password
     }
     
-    this.setState({pendingApiCall:true})
-    const response= await signUp(body)
+    try {
+      const response= await signUp(body)
+      this.setState({pendingApiCall:true})
+    } catch (error) {
+    
+    }
+    this.setState({pendingApiCall:false})
   }
   render() {
     return (
@@ -48,8 +53,7 @@ state={
 
         <div className="form-group">
           <label>Display Name</label>
-          <input name="displayname" type="text"className="form-control" placeholder="Display n
-          name" onChange={this.onChange} />
+          <input name="displayName" type="text"className="form-control" placeholder="Display name" onChange={this.onChange} />
         </div>
 
         <div className="form-group">
